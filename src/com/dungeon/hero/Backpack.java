@@ -17,7 +17,8 @@ public final class Backpack implements StatHero{
 		this.items = new HashMap<>();
 		this.pack = new ArrayList<>();
 	}
-    //fonction qui crée la grille avec une liste de liste
+	
+    //crée la grille avec une liste de liste
 	private void initPack(int rows, int cols) {
     pack = new ArrayList<>();
     for (int i = 0; i < rows; i++) {
@@ -28,6 +29,27 @@ public final class Backpack implements StatHero{
         pack.add(row);
     }
 }
+	// return true si une position(x,y) est dans le sac
+	private boolean validPosition(int x, int y) {
+    return x >= 0 && x < pack.size()
+        && y >= 0 && y < pack.get(0).size();
+}
+	//est ce que l'on peut mettre l'item
+	private boolean canPlaceItem(List<Position> itemPositions) {
+    for (Position p : itemPositions) {
+
+        // La case est dans les limites du sac ?
+        if (!validPosition(p.x(), p.y()))
+            return false;
+
+        // La case est libre(null) ou déjà un Item ?
+        if (pack.get(p.x()).get(p.y()) != null)
+            return false;
+    }
+    return true;
+}
+
+
 	
 
 
