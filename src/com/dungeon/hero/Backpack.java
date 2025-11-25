@@ -15,22 +15,44 @@ public final class Backpack implements StatHero{
 	
 	public Backpack() {
 		this.items = new HashMap<>();
-		initPack(3, 5); 
+		this.pack = new ArrayList<>();
 	}
-	
-	}
+    //fonction qui crée la grille avec une liste de liste
 	private void initPack(int rows, int cols) {
     pack = new ArrayList<>();
-
     for (int i = 0; i < rows; i++) {
         List<Item> row = new ArrayList<>();
         for (int j = 0; j < cols; j++) {
-            row.add(null); // case vide
+            row.add(null); 
         }
         pack.add(row);
     }
 }
+	
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
 //supression d'item
 	public void removeItem(Item item) {
 		Objects.requireNonNull(position);
