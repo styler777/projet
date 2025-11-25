@@ -9,11 +9,11 @@ import java.util.Optional;
 
 import com.dungeon.item.Item;
 
-public final class Inventory implements StatHero{
+public final class Backpack implements StatHero{
 	private int placeRemaining;
 	private final Position position;
 	private final HashMap<Item , List<Position>> items;
-	public Inventory(int placeRemaining , Position position) {
+	public Backpack(int placeRemaining , Position position) {
 		Objects.requireNonNull(position);
 		if(placeRemaining < 0)
 			throw new IllegalArgumentException();
@@ -21,7 +21,7 @@ public final class Inventory implements StatHero{
 		this.position = position;
 		this.items = new HashMap<>();
 	}
-	public Inventory(int placeRemaining , Position position , Map<Item, List<Position>> items){
+	public Backpack(int placeRemaining , Position position , Map<Item, List<Position>> items){
 		Objects.requireNonNull(items);
 		Objects.requireNonNull(position);
 		if(placeRemaining < 0)
@@ -30,10 +30,9 @@ public final class Inventory implements StatHero{
 		this.position = position;
 		this.items = new HashMap<>(items);
 	}
-
+//supression d'item
 	public void removeItem(Item item) {
 		Objects.requireNonNull(position);
-		
 		this.placeRemaining += item.size();
 		items.remove(item);
 
