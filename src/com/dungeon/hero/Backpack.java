@@ -10,26 +10,27 @@ import java.util.Optional;
 import com.dungeon.item.Item;
 
 public final class Backpack implements StatHero{
-	private int placeRemaining;
-	private final Position position;
-	private final HashMap<Item , List<Position>> items;
-	public Backpack(int placeRemaining , Position position) {
-		Objects.requireNonNull(position);
-		if(placeRemaining < 0)
-			throw new IllegalArgumentException();
-		this.placeRemaining = placeRemaining;
-		this.position = position;
+	private  List<List<Item>> pack;
+	private final Map<Item , List<Position>> items;
+	
+	public Backpack() {
 		this.items = new HashMap<>();
+		initPack(3, 5); 
 	}
-	public Backpack(int placeRemaining , Position position , Map<Item, List<Position>> items){
-		Objects.requireNonNull(items);
-		Objects.requireNonNull(position);
-		if(placeRemaining < 0)
-			throw new IllegalArgumentException();
-		this.placeRemaining = placeRemaining;
-		this.position = position;
-		this.items = new HashMap<>(items);
+	
 	}
+	private void initPack(int rows, int cols) {
+    pack = new ArrayList<>();
+
+    for (int i = 0; i < rows; i++) {
+        List<Item> row = new ArrayList<>();
+        for (int j = 0; j < cols; j++) {
+            row.add(null); // case vide
+        }
+        pack.add(row);
+    }
+}
+
 //supression d'item
 	public void removeItem(Item item) {
 		Objects.requireNonNull(position);
