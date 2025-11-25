@@ -24,5 +24,5 @@ public record BodyCurse(int damage , Stat stat, int round , int intensity , bool
 		Objects.requireNonNull(lifeRecord);
 		return lifeRecord.modifyHealth(stat, damage, true);
 	}
-	
+	return 0;
 }
