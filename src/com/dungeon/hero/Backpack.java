@@ -48,6 +48,23 @@ public final class Backpack implements StatHero{
     }
     return true;
 }
+	public boolean addItem(Item item, Position start) {
+		Objects.requireNonNull(item);
+	    Objects.requireNonNull(start);
+	    
+	    List<Position> itemPositions =item.getItemsPosition(start);
+	    
+	    if(!canPlaceItem (itemPositions)) {
+	    	return false;
+	    }
+	    
+	    for(Position p:itemPositions) {
+	    	pack.get(p.x()).set(p.y(),item);
+	    }
+	    return true;
+	    
+	}
+}
 
 
 	
