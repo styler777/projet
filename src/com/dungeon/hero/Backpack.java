@@ -20,34 +20,39 @@ public final class Backpack implements StatHero{
 	
     //crée la grille avec une liste de liste
 	private void initPack(int rows, int cols) {
-    pack = new ArrayList<>();
-    for (int i = 0; i < rows; i++) {
-        List<Item> row = new ArrayList<>();
-        for (int j = 0; j < cols; j++) {
-            row.add(null); 
-        }
-        pack.add(row);
-    }
-}
+	    pack = new ArrayList<>();
+	    for (int i = 0; i < rows; i++) {
+	        List<Item> row = new ArrayList<>();
+	        for (int j = 0; j < cols; j++) {
+	            row.add(null); 
+	        }
+	        pack.add(row);
+	    }
+	}
+	
+	
 	// return true si une position(x,y) est dans le sac
 	private boolean validPosition(int x, int y) {
     return x >= 0 && x < pack.size()
         && y >= 0 && y < pack.get(0).size();
-}
+	}
+	
+	
 	//est ce que l'on peut mettre l'item
 	private boolean canPlaceItem(List<Position> itemPositions) {
-    for (Position p : itemPositions) {
-
-        // La case est dans les limites du sac ?
-        if (!validPosition(p.x(), p.y()))
-            return false;
-
-        // La case est libre(null) ou déjà un Item ?
-        if (pack.get(p.x()).get(p.y()) != null)
-            return false;
-    }
-    return true;
-}
+		
+	    for (Position p : itemPositions) {
+	    	
+	        // La case est dans les limites du sac ?
+	        if (!validPosition(p.x(), p.y()))
+	            return false;
+	
+	        // La case est libre(null) ou déjà un Item ?
+	        if (pack.get(p.x()).get(p.y()) != null)
+	            return false;
+	    }
+	    return true;
+	}
 	public boolean addItem(Item item, Position start) {
 		Objects.requireNonNull(item);
 	    Objects.requireNonNull(start);
@@ -61,11 +66,29 @@ public final class Backpack implements StatHero{
 	    for(Position p:itemPositions) {
 	    	pack.get(p.x()).set(p.y(),item);
 	    }
+	    
+	 // enregistrer les positions occupées
+	    items.put(item, itemPositions);
 	    return true;
 	    
 	}
-}
+	public boolean removeItem(Item item) {
+		Objects.requireNonNull(item);
+		
+		List<Position> position =items.get(item);
+		if (position==null) {
+			return false;
+		}
+		for (Position p : position) {
+	        pack.get(p.x()).set(p.y(), null);
+	    }
+		items.remove(item);
 
+	    return true;
+		
+	}
+	
+}
 
 	
 
