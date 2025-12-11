@@ -16,7 +16,7 @@ public final class Backpack implements StatHero{
 	public Backpack() {
 		this.items = new HashMap<>();
 		this.pack = new ArrayList<>();
-	}
+	} 
 	
     //crée la grille avec une liste de liste
 	private void initPack(int rows, int cols) {
@@ -40,9 +40,7 @@ public final class Backpack implements StatHero{
 	
 	//est ce que l'on peut mettre l'item
 	private boolean canPlaceItem(List<Position> itemPositions) {
-		
 	    for (Position p : itemPositions) {
-	    	
 	        // La case est dans les limites du sac ?
 	        if (!validPosition(p.x(), p.y()))
 	            return false;
@@ -57,61 +55,53 @@ public final class Backpack implements StatHero{
 		Objects.requireNonNull(item);
 	    Objects.requireNonNull(start);
 	    
-	    List<Position> itemPositions =item.getItemsPosition(start);
+	    List<Position> positions =item.getItemsPosition(start);
 	    
 	    if(!canPlaceItem (itemPositions)) {
 	    	return false;
 	    }
 	    
-	    for(Position p:itemPositions) {
-	    	pack.get(p.x()).set(p.y(),item);
-	    }
+	     for (Position p : positions) {
+            Item present = pack.get(p.x()).get(p.y());
+            if (present != null) {
+                removeItem(present);
+            }
+        }
+		for (Position p : positions) {
+            pack.get(p.x()).set(p.y(), item);
+		}
 	    
 	 // enregistrer les positions occupées
-	    items.put(item, itemPositions);
+	    items.put(item, positions);
 	    return true;
 	    
 	}
 	public boolean removeItem(Item item) {
-		Objects.requireNonNull(item);
-		
-		List<Position> position =items.get(item);
-		if (position==null) {
-			return false;
-		}
-		for (Position p : position) {
-	        pack.get(p.x()).set(p.y(), null);
-	    }
-		items.remove(item);
+    Objects.requireNonNull(item);
+    List<Position> pos = items.get(item);
+    if (pos == null)
+        return false;
 
-	    return true;
-		
+    for (Position p : pos) {
+        pack.get(p.x()).set(p.y(), null);
+    }
+    items.remove(item);
+    return true;
+	}
+	public void modifyItem(Item newItem) {
+	    Objects.requireNonNull(newItem);
+	
+	    List<Position> pos = items.get(newItem);
+	    if (pos == null)
+	        return;
+	
+	    for (Position p : pos) {
+	        pack.get(p.x()).set(p.y(), newItem);
+	    }
+	
+	    items.put(newItem, pos);
 	}
 	
 }
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	
