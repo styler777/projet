@@ -2,14 +2,12 @@ package com.dungeon.item;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Random;
+
 
 import com.dungeon.combat.CombatEffect;
 import com.dungeon.hero.Position;
 
 public final class Curse implements Item, Equipment {
-
-    private static final Random RANDOM = new Random();
 
     private final String name;
     private final int damage;
@@ -19,9 +17,10 @@ public final class Curse implements Item, Equipment {
 
     private final List<Position> shape;
 
-    public Curse(String name, int damage, CombatEffect effect, int price, boolean block) {
+   public Curse(String name, int damage, CombatEffect effect, int price, boolean block, List<Position> shape) {
         Objects.requireNonNull(name);
         Objects.requireNonNull(effect);
+        Objects.requireNonNull(shape);
 
         if (damage < 0 || price < 0)
             throw new IllegalArgumentException();
@@ -31,58 +30,10 @@ public final class Curse implements Item, Equipment {
         this.effect = effect;
         this.price = price;
         this.block = block;
-
-        this.shape = generateRandomShape();
+        this.shape = List.copyOf(shape);;
     }
 
-    private List<Position> generateRandomShape() {
-        int form = RANDOM.nextInt(3);
-
-        if (form == 0) {
-            return List.of(new Position(0, 0));
-        }
-
-        if (form == 1) {
-            boolean horizontal = RANDOM.nextBoolean();
-            if (horizontal) {
-                return List.of(
-                    new Position(0, 0),
-                    new Position(1, 0)
-                );
-            } else {
-                return List.of(
-                    new Position(0, 0),
-                    new Position(0, 1)
-                );
-            }
-        }
-
-        int shape3 = RANDOM.nextInt(3);
-
-        if (shape3 == 0) {
-            return List.of(
-                new Position(0, 0),
-                new Position(1, 0),
-                new Position(2, 0)
-            );
-        }
-
-        if (shape3 == 1) {
-            return List.of(
-                new Position(0, 0),
-                new Position(0, 1),
-                new Position(0, 2)
-            );
-        }
-
-        return List.of(
-            new Position(0, 0),
-            new Position(0, 1),
-            new Position(1, 1)
-        );
-    }
-
-    @Override
+	@Override
     public List<Position> getItemsPosition(Position start) {
         return shape.stream()
                 .map(p -> new Position(start.x() + p.x(), start.y() + p.y()))
@@ -91,14 +42,14 @@ public final class Curse implements Item, Equipment {
 
     @Override
     public Item blockItem() {
-        return new Curse(name, damage, effect, price, true);
+        return new Curse(name, damage, effect, price, true, shape);
+    }
+
+    public List<Position> shape() {
+        return shape;
     }
 }
 
+	
 
-
-	
-	
-	
-	
-}
+   
