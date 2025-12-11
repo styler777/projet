@@ -27,7 +27,7 @@ public record CurseEnemy(String name  , Stat stat, int damage, int intensity , i
 	
 	public BodyCurse increaseIntensity(BodyCurse bodyCurse) {
 		Objects.requireNonNull(bodyCurse);
-		return bodyCurse.modifyIntensityeBodyCurse();
+		return bodyCurse.modifyIntensityBodyCurse();
 
 	}
 	
