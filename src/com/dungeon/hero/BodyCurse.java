@@ -16,7 +16,8 @@ public record BodyCurse(int damage , Stat stat, int round , int intensity , bool
 	}
 	
 	public BodyCurse modifyIntensityeBodyCurse() {
-		return new BodyCurse(damage *intensity + 1 , stat  , round, intensity + 1 , startRound, active);
+		int newDamage = (int) (damage * 1.5);
+		return new BodyCurse(newDamage , stat  , round, intensity + 1 , startRound, active);
 
 	}
 	
