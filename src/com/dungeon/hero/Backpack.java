@@ -57,7 +57,7 @@ public final class Backpack implements StatHero{
 	    
 	    List<Position> positions =item.getItemsPosition(start);
 	    
-	    if(!canPlaceItem (itemPositions)) {
+	    if(!canPlaceItem (positions)) {
 	    	return false;
 	    }
 	    
