@@ -6,7 +6,7 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 import com.dungeon.hero.BodyCurse;
-import com.dungeon.hero.Inventory;
+import com.dungeon.hero.Backpack;
 import com.dungeon.hero.Stat;
 import com.dungeon.item.Item;
 
@@ -39,10 +39,10 @@ public record CurseEnemy(String name  , Stat stat, int damage, int intensity , i
 
 	}
 	
-	public void blockItem(List<Item> items , Inventory inventory) {
-		Objects.requireNonNull(inventory);
+	public void blockItem(List<Item> items , Backpack backpack) {
+		Objects.requireNonNull(backpack);
 		Objects.requireNonNull(items);
-		items.stream().map(i -> i.blockItem()).toList().forEach(i -> inventory.modifyItem(i));;
+		items.stream().map(i -> i.blockItem()).toList().forEach(i -> backpack.modifyItem(i));;
 		
 	}
 	
